@@ -1,4 +1,4 @@
-outlierdetection <- function(data,k='default')
+outliers <- function(data,k='default')
 {
   #creating a local function
   ub <- function(x)
@@ -40,9 +40,9 @@ outlierdetection <- function(data,k='default')
   if (k=='default'|| k=='yes') #if k is either 'default' or 'yes', execute the below codes
   {
     upperb <- apply(data, 2, ub)
-    upperb <- as.matrix(upperb)
+    upperb <- as.data.frame(upperb)
     lowerb <- apply(data, 2, lb)
-    lowerb <- as.matrix(lowerb)
+    lowerb <- as.data.frame(lowerb)
     outlier<-cbind(upperb,lowerb)
     colnames(outlier) <- c("uppercount","lowercount")
   }
@@ -51,20 +51,18 @@ outlierdetection <- function(data,k='default')
   {
     data1<-log(data+1)
     upperb1 <- apply(data1, 2, ub)
-    upperb1 <- as.matrix(upperb1)
+    upperb1 <- as.data.frame(upperb1)
     lowerb1 <- apply(data1, 2, lb)
-    lowerb1 <- as.matrix(lowerb1)
+    lowerb1 <- as.data.frame(lowerb1)
     outlier1<-cbind(upperb1,lowerb1)
     colnames(outlier1) <- c("log_uppercount","log_lowercount")
     result<-cbind(outlier,outlier1) #column bind the matrices of 'actual data' and 'log transformed data'
-    return(result)
+    write.xlsx(result, file="outliers.xlsx")
+
   }
     else #if the k is not 'yes',return the matrix for actual data with outlier counts
     {
-      return(outlier)
+      write.xlsx(outlier, file="outliers.xlsx")
     }}
 
 }
-
-
-
