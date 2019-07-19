@@ -1,4 +1,4 @@
-outliers <- function(data,k='default')
+outlierdetection <- function(data,k='default')
 {
   #creating a local function
   ub <- function(x)
